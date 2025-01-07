@@ -3,73 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iframe Link Blocker</title>
+    <title>Embedded Airtable</title>
     <style>
-        /* Style de base pour l'iframe */
-        iframe {
-            width: 100%;
-            height: 600px;
-            border: none;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Overlay pour capturer les clics */
-        .iframe-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
+        .iframe-container {
+            width: 100%;
+            height: 533px;
+            border: 1px solid #ccc;
+        }
+
+        .airtable-iframe {
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0); /* Transparent */
-            z-index: 10;
-        }
-
-        /* Conteneur pour positionner l'iframe et l'overlay */
-        .iframe-container {
-            position: relative;
-            width: 100%;
-            height: 600px;
+            border: none;
         }
     </style>
 </head>
 <body>
+    <h1>Embedded Airtable</h1>
+    <p>Ce contenu est intégré depuis Airtable. Les clics externes vers le lien spécifié seront bloqués.</p>
+    <div class="iframe-container">
+        <!-- Iframe d'Airtable -->
+        <iframe 
+            class="airtable-iframe" 
+            src="https://airtable.com/appssQNuTVxHG6Quj/pagRb0bwRkWNYVFRX?bfdiu%3Aview=plaVOUz81C3B6fZzg"
+            id="airtable-iframe">
+        </iframe>
+    </div>
 
-<div class="iframe-container">
-    <!-- Iframe affichant le contenu d'Airtable -->
-    <iframe id="airtable-iframe" src="https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
+    <script>
+        // Ajouter un écouteur pour bloquer l'ouverture du lien spécifique
+        document.addEventListener('click', function(event) {
+            const target = event.target;
 
-    <!-- Overlay pour bloquer les clics -->
-    <div class="iframe-overlay" id="iframe-overlay"></div>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const overlay = document.getElementById('iframe-overlay');
-
-        // Bloquer tous les clics sur l'iframe via l'overlay
-        overlay.addEventListener('click', function (event) {
-            event.preventDefault();
-            alert("Les clics sur ce contenu sont bloqués.");
+            // Vérifiez si c'est un lien dans l'iframe
+            if (target.tagName === 'A' && target.href === "https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR") {
+                event.preventDefault(); // Bloquer l'action par défaut
+                alert("Ce lien est désactivé et ne peut pas être ouvert.");
+            }
         });
 
-        // Bonus : Si vous souhaitez détecter et empêcher spécifiquement les clics sur les liens dans l'iframe
+        // Vérifier également les clics effectués à l'intérieur de l'iframe
         const iframe = document.getElementById('airtable-iframe');
-        iframe.onload = function () {
+        iframe.addEventListener('load', function() {
             try {
-                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
 
-                iframeDoc.addEventListener('click', function (event) {
+                // Ajouter un écouteur aux liens dans l'iframe
+                iframeDocument.addEventListener('click', function(event) {
                     const target = event.target;
-                    if (target.tagName === 'A') {
-                        event.preventDefault(); // Bloquer l'exécution du lien
-                        alert('Ce lien est bloqué dans l'iframe.');
+
+                    // Bloquer le lien spécifique
+                    if (target.tagName === 'A' && target.href === "https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR") {
+                        event.preventDefault(); // Bloquer l'action par défaut
+                        alert("Ce lien est désactivé et ne peut pas être ouvert.");
                     }
                 });
             } catch (error) {
-                console.error('Impossible d’accéder au contenu de l’iframe : ', error);
+                console.warn("Impossible d'accéder au contenu de l'iframe pour des raisons de sécurité.");
             }
-        };
-    });
-</script>
-
+        });
+    </script>
 </body>
 </html>
