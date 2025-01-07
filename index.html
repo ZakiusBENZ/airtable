@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Open Airtable</title>
+    <title>Ouvrir Airtable</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -12,6 +12,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
+            background-color: #f4f4f9;
         }
         button {
             padding: 10px 20px;
@@ -31,12 +32,28 @@
     <button id="open-airtable">Ouvrir Airtable</button>
 
     <script>
-        document.getElementById('open-airtable').addEventListener('click', function() {
-            window.open(
-                'https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR', 
-                '_blank', 
-                'width=800,height=600'
-            );
+        document.getElementById('open-airtable').addEventListener('click', function () {
+            const url = 'https://airtable.com/appssQNuTVxHG6Quj/pagmHBOjdpTaIxaIu';
+            const options = [
+                'width=1024', // Largeur de la fenêtre
+                'height=768', // Hauteur de la fenêtre
+                'scrollbars=yes', // Permet le défilement
+                'resizable=yes', // Permet de redimensionner
+                'status=no', // Supprime la barre de statut
+                'toolbar=no', // Supprime la barre d’outils
+                'menubar=no', // Supprime la barre de menu
+                'location=no' // Supprime la barre d'adresse
+            ].join(',');
+
+            // Ouvre la nouvelle fenêtre avec les options spécifiées
+            const newWindow = window.open(url, '_blank', options);
+
+            // Si la fenêtre s’ouvre avec succès, exécute un script supplémentaire
+            if (newWindow) {
+                newWindow.focus(); // Donne le focus à la nouvelle fenêtre
+            } else {
+                alert('Veuillez autoriser les fenêtres pop-up dans votre navigateur.');
+            }
         });
     </script>
 </body>
