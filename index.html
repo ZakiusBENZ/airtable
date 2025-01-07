@@ -3,22 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intégration Airtable</title>
+    <title>Embedded Airtable</title>
     <style>
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            padding: 0;
         }
-
-        header {
-            background: #007bff;
-            color: white;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .iframe-container {
+        iframe {
             width: 100%;
             height: 100vh;
             border: none;
@@ -26,15 +17,11 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Intégration Airtable</h1>
-    </header>
-
+    <h1 style="text-align: center; font-family: Arial, sans-serif;">Airtable Integration</h1>
     <iframe 
-        class="iframe-container" 
         src="https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR" 
-        frameborder="0" 
-        allowfullscreen>
+        sandbox="allow-scripts allow-same-origin allow-forms" 
+        id="airtable-frame">
     </iframe>
 </body>
 </html>
