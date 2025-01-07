@@ -3,71 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embedded Airtable</title>
+    <title>Intégration Airtable</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background: #007bff;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
         }
 
         .iframe-container {
             width: 100%;
-            height: 533px;
-            border: 1px solid #ccc;
-        }
-
-        .airtable-iframe {
-            width: 100%;
-            height: 100%;
+            height: 100vh;
             border: none;
         }
     </style>
 </head>
 <body>
-    <h1>Embedded Airtable</h1>
-    <p>Ce contenu est intégré depuis Airtable. Les clics externes vers le lien spécifié seront bloqués.</p>
-    <div class="iframe-container">
-        <!-- Iframe d'Airtable -->
-        <iframe 
-            class="airtable-iframe" 
-            src="https://airtable.com/appssQNuTVxHG6Quj/pagRb0bwRkWNYVFRX?bfdiu%3Aview=plaVOUz81C3B6fZzg"
-            id="airtable-iframe">
-        </iframe>
-    </div>
+    <header>
+        <h1>Intégration Airtable</h1>
+    </header>
 
-    <script>
-        // Ajouter un écouteur pour bloquer l'ouverture du lien spécifique
-        document.addEventListener('click', function(event) {
-            const target = event.target;
-
-            // Vérifiez si c'est un lien dans l'iframe
-            if (target.tagName === 'A' && target.href === "https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR") {
-                event.preventDefault(); // Bloquer l'action par défaut
-                alert("Ce lien est désactivé et ne peut pas être ouvert.");
-            }
-        });
-
-        // Vérifier également les clics effectués à l'intérieur de l'iframe
-        const iframe = document.getElementById('airtable-iframe');
-        iframe.addEventListener('load', function() {
-            try {
-                const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-
-                // Ajouter un écouteur aux liens dans l'iframe
-                iframeDocument.addEventListener('click', function(event) {
-                    const target = event.target;
-
-                    // Bloquer le lien spécifique
-                    if (target.tagName === 'A' && target.href === "https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR") {
-                        event.preventDefault(); // Bloquer l'action par défaut
-                        alert("Ce lien est désactivé et ne peut pas être ouvert.");
-                    }
-                });
-            } catch (error) {
-                console.warn("Impossible d'accéder au contenu de l'iframe pour des raisons de sécurité.");
-            }
-        });
-    </script>
+    <iframe 
+        class="iframe-container" 
+        src="https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR" 
+        frameborder="0" 
+        allowfullscreen>
+    </iframe>
 </body>
 </html>
