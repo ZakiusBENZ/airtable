@@ -3,25 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Embedded Airtable</title>
+    <title>Open Airtable</title>
     <style>
         body {
-            margin: 0;
-            padding: 0;
-        }
-        iframe {
-            width: 100%;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             height: 100vh;
+            margin: 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0078d4;
+            color: white;
             border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
         }
     </style>
 </head>
 <body>
-    <h1 style="text-align: center; font-family: Arial, sans-serif;">Airtable Integration</h1>
-    <iframe 
-        src="https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR" 
-        sandbox="allow-scripts allow-same-origin allow-forms" 
-        id="airtable-frame">
-    </iframe>
+    <button id="open-airtable">Ouvrir Airtable</button>
+
+    <script>
+        document.getElementById('open-airtable').addEventListener('click', function() {
+            window.open(
+                'https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR', 
+                '_blank', 
+                'width=800,height=600'
+            );
+        });
+    </script>
 </body>
 </html>
