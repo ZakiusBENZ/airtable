@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airtable Integration</title>
     <style>
-        /* Masquer l'élément cible avec CSS */
+        /* Masquer l'élément avec CSS dès qu'il est détecté */
         div.flex.flex-auto.flex-reverse.items-center.small {
-            display: none !important; /* Cache l'élément et ses enfants */
+            display: none !important; /* Masque l'élément et ses enfants */
         }
 
-        /* Styliser l'iframe */
+        /* Styliser l'iframe pour un affichage optimal */
         iframe {
             width: 100%;
             height: 600px;
@@ -22,42 +22,37 @@
     <!-- Intégration de l'iframe Airtable -->
     <iframe id="airtable-iframe" src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
 
-    <!-- Script JavaScript pour masquer dynamiquement l'élément -->
+    <!-- Script JavaScript pour gérer le masquage de l'élément -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Fonction pour masquer l'élément immédiatement
-            const hideElementImmediately = () => {
-                const elementToHide = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
-                if (elementToHide) {
-                    elementToHide.style.display = 'none';
-                    console.log("Élément masqué immédiatement.");
+            console.log("Document chargé, en attente de l'élément cible...");
+            
+            // Fonction pour vérifier et masquer l'élément
+            const checkAndHideElement = () => {
+                const targetElement = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
+                if (targetElement) {
+                    targetElement.style.display = 'none'; // Masque l'élément
+                    console.log("Élément trouvé et masqué.");
+                    return true; // Retourne "true" si l'élément est trouvé et masqué
                 }
+                return false; // Retourne "false" si l'élément n'est pas trouvé
             };
 
-            // Masquer immédiatement si l'élément est déjà présent
-            hideElementImmediately();
-
-            // Ajouter un délai pour gérer les éléments dynamiques
-            const hideElementDynamically = () => {
-                const dynamicElement = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
-                if (dynamicElement) {
-                    dynamicElement.style.display = 'none';
-                    console.log("Élément masqué dynamiquement.");
-                } else {
-                    console.log("Élément non trouvé, tentative à nouveau...");
-                }
-            };
-
-            // Répéter la vérification toutes les 500ms pendant 5 secondes maximum
-            let attempts = 0;
-            const interval = setInterval(() => {
-                hideElementDynamically();
-                attempts++;
-                if (attempts > 10) { // Arrêter après 10 tentatives (5 secondes)
-                    clearInterval(interval);
-                    console.log("Arrêt des tentatives de masquage.");
-                }
-            }, 500);
+            // Vérification immédiate
+            if (!checkAndHideElement()) {
+                // Si l'élément n'est pas trouvé immédiatement, démarrer un intervalle
+                let attempts = 0;
+                const interval = setInterval(() => {
+                    const found = checkAndHideElement();
+                    attempts++;
+                    if (found || attempts > 60) { // Arrêter après 60 tentatives (30 secondes)
+                        clearInterval(interval);
+                        if (!found) {
+                            console.log("Élément non trouvé après plusieurs tentatives.");
+                        }
+                    }
+                }, 500); // Vérifier toutes les 500ms
+            }
         });
     </script>
 </body>
