@@ -3,57 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airtable Integration</title>
+    <title>Iframe Link Blocker</title>
     <style>
-        /* Masquer l'élément cible via CSS */
-        div.flex.flex-auto.flex-reverse.items-center.small {
-            display: none !important;
-        }
-
-        /* Styliser l'iframe */
+        /* Style de base pour l'iframe */
         iframe {
             width: 100%;
             height: 600px;
             border: none;
         }
+
+        /* Overlay pour capturer les clics */
+        .iframe-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0); /* Transparent */
+            z-index: 10;
+        }
+
+        /* Conteneur pour positionner l'iframe et l'overlay */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+        }
     </style>
 </head>
 <body>
-    <!-- Intégration de l'iframe Airtable -->
-    <iframe id="airtable-iframe" src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
 
-    <!-- Script JavaScript pour gérer dynamiquement le masquage -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            console.log("Chargement du document, tentative de masquage de l'élément cible...");
+<div class="iframe-container">
+    <!-- Iframe affichant le contenu d'Airtable -->
+    <iframe id="airtable-iframe" src="https://airtable.com/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
 
-            // Fonction pour vérifier et masquer l'élément
-            const checkAndHideElement = () => {
-                const targetElement = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
-                if (targetElement) {
-                    targetElement.style.display = 'none'; // Masquer l'élément
-                    console.log("Élément trouvé et masqué.");
-                    return true; // Indiquer que l'élément a été trouvé et masqué
-                }
-                return false; // L'élément n'a pas encore été trouvé
-            };
+    <!-- Overlay pour bloquer les clics -->
+    <div class="iframe-overlay" id="iframe-overlay"></div>
+</div>
 
-            // Vérification immédiate
-            if (!checkAndHideElement()) {
-                // Réessayer périodiquement si l'élément n'est pas encore chargé
-                let attempts = 0;
-                const interval = setInterval(() => {
-                    const found = checkAndHideElement();
-                    attempts++;
-                    if (found || attempts > 60) { // Arrêter après 60 tentatives (30 secondes)
-                        clearInterval(interval);
-                        if (!found) {
-                            console.log("Élément non trouvé après plusieurs tentatives.");
-                        }
-                    }
-                }, 500); // Répéter toutes les 500ms
-            }
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const overlay = document.getElementById('iframe-overlay');
+
+        // Bloquer tous les clics sur l'iframe via l'overlay
+        overlay.addEventListener('click', function (event) {
+            event.preventDefault();
+            alert("Les clics sur ce contenu sont bloqués.");
         });
-    </script>
+
+        // Bonus : Si vous souhaitez détecter et empêcher spécifiquement les clics sur les liens dans l'iframe
+        const iframe = document.getElementById('airtable-iframe');
+        iframe.onload = function () {
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+
+                iframeDoc.addEventListener('click', function (event) {
+                    const target = event.target;
+                    if (target.tagName === 'A') {
+                        event.preventDefault(); // Bloquer l'exécution du lien
+                        alert('Ce lien est bloqué dans l'iframe.');
+                    }
+                });
+            } catch (error) {
+                console.error('Impossible d’accéder au contenu de l’iframe : ', error);
+            }
+        };
+    });
+</script>
+
 </body>
 </html>
