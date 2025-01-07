@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airtable Integration</title>
     <style>
-        /* Masquer l'élément cible via CSS */
+        /* Masquer l'élément cible avec CSS */
         a.flex-inline.items-center.quiet.link-unquiet.pointer.px1 {
-            display: none !important; /* Cache l'élément avec force */
+            display: none !important;
         }
 
-        /* Styliser l'iframe pour un affichage optimal */
+        /* Styliser l'iframe */
         iframe {
             width: 100%;
             height: 600px;
@@ -22,25 +22,25 @@
     <!-- Intégration de l'iframe Airtable -->
     <iframe id="airtable-iframe" src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
 
-    <!-- Script JavaScript pour gérer dynamiquement le masquage -->
+    <!-- Script JavaScript pour masquer dynamiquement l'élément -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            console.log("Document chargé, tentative de masquage de l'élément cible...");
-            
+            console.log("Chargement du document, tentative de masquage de l'élément cible...");
+
             // Fonction pour vérifier et masquer l'élément
             const checkAndHideElement = () => {
                 const targetElement = document.querySelector('a.flex-inline.items-center.quiet.link-unquiet.pointer.px1');
                 if (targetElement) {
                     targetElement.style.display = 'none'; // Masquer l'élément
                     console.log("Élément trouvé et masqué.");
-                    return true; // Retourne "true" si l'élément est trouvé et masqué
+                    return true; // Indiquer que l'élément a été trouvé et masqué
                 }
-                return false; // Retourne "false" si l'élément n'est pas trouvé
+                return false; // L'élément n'a pas encore été trouvé
             };
 
             // Vérification immédiate
             if (!checkAndHideElement()) {
-                // Si l'élément n'est pas trouvé immédiatement, démarrer un intervalle
+                // Réessayer périodiquement si l'élément n'est pas encore chargé
                 let attempts = 0;
                 const interval = setInterval(() => {
                     const found = checkAndHideElement();
@@ -51,7 +51,7 @@
                             console.log("Élément non trouvé après plusieurs tentatives.");
                         }
                     }
-                }, 500); // Vérifier toutes les 500ms
+                }, 500); // Répéter toutes les 500ms
             }
         });
     </script>
