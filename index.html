@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airtable Integration</title>
     <style>
-        /* Masquer l'élément via CSS */
-        a.flex-inline.items-center.quiet.link-unquiet.pointer.px1 {
-            display: none !important; /* Force la dissimulation */
+        /* Masquer le div cible et ses enfants via CSS */
+        div.flex.flex-auto.flex-reverse.items-center.small {
+            display: none !important; /* Cache l'élément avec force */
         }
 
-        /* Styliser l'iframe */
+        /* Styliser l'iframe pour un affichage optimal */
         iframe {
             width: 100%;
             height: 600px;
@@ -22,19 +22,19 @@
     <!-- Intégration de l'iframe Airtable -->
     <iframe id="airtable-iframe" src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
 
-    <!-- Script JavaScript pour gérer les éléments -->
+    <!-- Script JavaScript pour masquer dynamiquement l'élément -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             // Masquer immédiatement si l'élément est déjà présent
-            const elementToHide = document.querySelector('a.flex-inline.items-center.quiet.link-unquiet.pointer.px1');
+            const elementToHide = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
             if (elementToHide) {
                 elementToHide.style.display = 'none';
                 console.log("Élément masqué immédiatement.");
             }
 
-            // Ajouter un délai pour les éléments générés dynamiquement
+            // Ajouter un délai pour gérer les éléments dynamiques
             const hideElementDynamically = () => {
-                const dynamicElement = document.querySelector('a.flex-inline.items-center.quiet.link-unquiet.pointer.px1');
+                const dynamicElement = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
                 if (dynamicElement) {
                     dynamicElement.style.display = 'none';
                     console.log("Élément masqué dynamiquement.");
