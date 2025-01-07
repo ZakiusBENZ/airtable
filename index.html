@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ouvrir Airtable</title>
+    <title>Ouvrir Airtable en mode Desktop</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -29,28 +29,44 @@
     </style>
 </head>
 <body>
-    <button id="open-airtable">Ouvrir Airtable</button>
+    <button id="open-airtable">Ouvrir Airtable en mode Desktop</button>
 
     <script>
         document.getElementById('open-airtable').addEventListener('click', function () {
             const url = 'https://airtable.com/appssQNuTVxHG6Quj/pagmHBOjdpTaIxaIu';
+
+            // Options pour la fenêtre
             const options = [
-                'width=1024', // Largeur de la fenêtre
-                'height=768', // Hauteur de la fenêtre
-                'scrollbars=yes', // Permet le défilement
-                'resizable=yes', // Permet de redimensionner
-                'status=no', // Supprime la barre de statut
-                'toolbar=no', // Supprime la barre d’outils
-                'menubar=no', // Supprime la barre de menu
-                'location=no' // Supprime la barre d'adresse
+                'width=1280', // Largeur pour une vue desktop
+                'height=800', // Hauteur
+                'scrollbars=yes',
+                'resizable=yes'
             ].join(',');
 
-            // Ouvre la nouvelle fenêtre avec les options spécifiées
-            const newWindow = window.open(url, '_blank', options);
+            // Ouvre la fenêtre
+            const newWindow = window.open('', '_blank', options);
 
-            // Si la fenêtre s’ouvre avec succès, exécute un script supplémentaire
             if (newWindow) {
-                newWindow.focus(); // Donne le focus à la nouvelle fenêtre
+                // Injecte le contenu avec un user-agent desktop
+                newWindow.document.write(`
+                    <html>
+                    <head>
+                        <title>Airtable - Desktop Mode</title>
+                        <script>
+                            // Forcer un User-Agent Desktop (nécessite un contrôle local)
+                            Object.defineProperty(navigator, 'userAgent', {
+                                get: () => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36'
+                            });
+                        </script>
+                    </head>
+                    <body style="margin: 0; padding: 0; overflow: hidden;">
+                        <iframe src="${url}" style="border: none; width: 100%; height: 100%;"></iframe>
+                    </body>
+                    </html>
+                `);
+
+                // Donne le focus à la fenêtre
+                newWindow.focus();
             } else {
                 alert('Veuillez autoriser les fenêtres pop-up dans votre navigateur.');
             }
