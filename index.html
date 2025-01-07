@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airtable Integration</title>
     <style>
-        /* Masquer le div cible et ses enfants via CSS */
+        /* Masquer l'élément cible avec CSS */
         div.flex.flex-auto.flex-reverse.items-center.small {
-            display: none !important; /* Cache l'élément avec force */
+            display: none !important; /* Cache l'élément et ses enfants */
         }
 
-        /* Styliser l'iframe pour un affichage optimal */
+        /* Styliser l'iframe */
         iframe {
             width: 100%;
             height: 600px;
@@ -25,12 +25,17 @@
     <!-- Script JavaScript pour masquer dynamiquement l'élément -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            // Fonction pour masquer l'élément immédiatement
+            const hideElementImmediately = () => {
+                const elementToHide = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
+                if (elementToHide) {
+                    elementToHide.style.display = 'none';
+                    console.log("Élément masqué immédiatement.");
+                }
+            };
+
             // Masquer immédiatement si l'élément est déjà présent
-            const elementToHide = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
-            if (elementToHide) {
-                elementToHide.style.display = 'none';
-                console.log("Élément masqué immédiatement.");
-            }
+            hideElementImmediately();
 
             // Ajouter un délai pour gérer les éléments dynamiques
             const hideElementDynamically = () => {
@@ -48,7 +53,7 @@
             const interval = setInterval(() => {
                 hideElementDynamically();
                 attempts++;
-                if (attempts > 10) { // 10 tentatives = 5 secondes
+                if (attempts > 10) { // Arrêter après 10 tentatives (5 secondes)
                     clearInterval(interval);
                     console.log("Arrêt des tentatives de masquage.");
                 }
