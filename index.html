@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airtable Integration</title>
     <style>
-        /* Masquer l'élément cible avec CSS */
-        a.flex-inline.items-center.quiet.link-unquiet.pointer.px1 {
+        /* Masquer l'élément cible via CSS */
+        div.flex.flex-auto.flex-reverse.items-center.small {
             display: none !important;
         }
 
@@ -22,14 +22,14 @@
     <!-- Intégration de l'iframe Airtable -->
     <iframe id="airtable-iframe" src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
 
-    <!-- Script JavaScript pour masquer dynamiquement l'élément -->
+    <!-- Script JavaScript pour gérer dynamiquement le masquage -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             console.log("Chargement du document, tentative de masquage de l'élément cible...");
 
             // Fonction pour vérifier et masquer l'élément
             const checkAndHideElement = () => {
-                const targetElement = document.querySelector('a.flex-inline.items-center.quiet.link-unquiet.pointer.px1');
+                const targetElement = document.querySelector('div.flex.flex-auto.flex-reverse.items-center.small');
                 if (targetElement) {
                     targetElement.style.display = 'none'; // Masquer l'élément
                     console.log("Élément trouvé et masqué.");
