@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airtable Integration</title>
     <style>
+        /* Masque l'élément avec les classes spécifiées */
+        a.flex-inline.items-center.quiet.link-unquiet.pointer.px1 {
+            display: none; /* Cache l'élément */
+        }
+
+        /* Stylise l'iframe pour un affichage optimal */
         iframe {
             width: 100%;
             height: 600px;
@@ -13,6 +19,18 @@
     </style>
 </head>
 <body>
+    <!-- Intégration de l'iframe Airtable -->
     <iframe src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
+
+    <!-- Script pour masquer dynamiquement l'élément (si nécessaire) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Sélectionne l'élément et le masque
+            const elementToHide = document.querySelector('a.flex-inline.items-center.quiet.link-unquiet.pointer.px1');
+            if (elementToHide) {
+                elementToHide.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
