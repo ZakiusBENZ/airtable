@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airtable Integration</title>
     <style>
-        /* Masque l'élément avec les classes spécifiées */
+        /* Masquer l'élément via CSS */
         a.flex-inline.items-center.quiet.link-unquiet.pointer.px1 {
-            display: none; /* Cache l'élément */
+            display: none !important; /* Force la dissimulation */
         }
 
-        /* Stylise l'iframe pour un affichage optimal */
+        /* Styliser l'iframe */
         iframe {
             width: 100%;
             height: 600px;
@@ -20,16 +20,39 @@
 </head>
 <body>
     <!-- Intégration de l'iframe Airtable -->
-    <iframe src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
+    <iframe id="airtable-iframe" src="https://airtable.com/embed/appssQNuTVxHG6Quj/shrAKrvIL2d5PZAHR"></iframe>
 
-    <!-- Script pour masquer dynamiquement l'élément (si nécessaire) -->
+    <!-- Script JavaScript pour gérer les éléments -->
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Sélectionne l'élément et le masque
+            // Masquer immédiatement si l'élément est déjà présent
             const elementToHide = document.querySelector('a.flex-inline.items-center.quiet.link-unquiet.pointer.px1');
             if (elementToHide) {
                 elementToHide.style.display = 'none';
+                console.log("Élément masqué immédiatement.");
             }
+
+            // Ajouter un délai pour les éléments générés dynamiquement
+            const hideElementDynamically = () => {
+                const dynamicElement = document.querySelector('a.flex-inline.items-center.quiet.link-unquiet.pointer.px1');
+                if (dynamicElement) {
+                    dynamicElement.style.display = 'none';
+                    console.log("Élément masqué dynamiquement.");
+                } else {
+                    console.log("Élément non trouvé, tentative à nouveau...");
+                }
+            };
+
+            // Répéter la vérification toutes les 500ms pendant 5 secondes maximum
+            let attempts = 0;
+            const interval = setInterval(() => {
+                hideElementDynamically();
+                attempts++;
+                if (attempts > 10) { // 10 tentatives = 5 secondes
+                    clearInterval(interval);
+                    console.log("Arrêt des tentatives de masquage.");
+                }
+            }, 500);
         });
     </script>
 </body>
